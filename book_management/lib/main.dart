@@ -41,9 +41,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Book Management',
-      
       theme: ThemeData(
-        
         colorScheme: ColorScheme.light(
           primary: AppColors.primaryColor300,
           onSecondary: AppColors.textColor300,
