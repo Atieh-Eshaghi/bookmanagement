@@ -1,18 +1,26 @@
-import 'package:book_management/models/order_model.dart';
+import 'package:book_management/models/book_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/colors.dart';
-import '../../widget/bottom_navigation.dart';
 
-class OrdersPage extends StatefulWidget {
-  const OrdersPage({super.key});
+class AddOrEditBookPage extends StatefulWidget {
+  final BookModel? book;
+  const AddOrEditBookPage({super.key , required this.book});
 
   @override
-  State<OrdersPage> createState() => _OrdersPageState();
+  State<AddOrEditBookPage> createState() => _AddOrEditBookPageState();
 }
 
-class _OrdersPageState extends State<OrdersPage> {
-  final List<OrderModel> order = OrderModel.fakeData;
+class _AddOrEditBookPageState extends State<AddOrEditBookPage> {
+
+  void addOrUpdateBookApi(BookModel book){
+    if (book.id.isEmpty){
+      // todo add
+    }else{
+      // todo update
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,14 +39,12 @@ class _OrdersPageState extends State<OrdersPage> {
                   height: 28,
                 ),
                 Text(
-                  "سفارشات من",
+                  widget.book == null ?"افزودن کتاب" : "ویرایش ${widget.book!.title}",
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
               ],
             ),
           )),
-      bottomNavigationBar:
-          CustomBottomNavigation(activeType: BottomNvigationType.orders),
     );
   }
 }

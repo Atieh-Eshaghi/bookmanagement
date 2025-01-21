@@ -38,6 +38,7 @@ dependencies:
   provider: ^6.1.2
   flutter_svg: ^2.0.17
   intl: ^0.20.1
+  shamsi_date: ^1.0.4
 
 dev_dependencies:
   flutter_test:

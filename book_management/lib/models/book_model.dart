@@ -74,7 +74,7 @@ class BookModel extends ValueNotifier<bool> {
         id: "854734",
         imagePath: "assets/images/book3.jpg",
         genre: "مهندسی",
-        isSoled: false,
+        isSoled: true,
         author: "حسین حسین زاده",
         pageCount: 245,
         userId: "user7"),
