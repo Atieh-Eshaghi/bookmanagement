@@ -1,3 +1,4 @@
+import 'package:book_management/models/authentication.dart';
 import 'package:book_management/screens/auth/signup_page.dart';
 import 'package:book_management/utils/utils.dart';
 import 'package:book_management/widget/buttons.dart';
@@ -118,6 +119,10 @@ class _LoginPageState extends State<LoginPage> {
                           // todo login api call
                           await Future.delayed(Duration(seconds: 5));
                           if (username == "admin" && password == "12345678") {
+                            Authentication.user = Authentication(
+                                id: "325232",
+                                username: username,
+                                name: "عطیه اسحاقی");
                             Navigator.of(context)
                                 .pushReplacement(MaterialPageRoute(
                               builder: (context) => HomePage(),

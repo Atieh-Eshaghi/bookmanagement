@@ -41,9 +41,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Book Management',
-      
       theme: ThemeData(
-        
         colorScheme: ColorScheme.light(
           primary: AppColors.primaryColor300,
           onSecondary: AppColors.textColor300,
@@ -57,7 +55,7 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.w800, fontSize: 16),
           bodyLarge: mainTextStyle300.copyWith(fontSize: 18),
           titleLarge: mainTextStyle300.copyWith(
-              fontWeight: FontWeight.w600, fontSize: 21),
+              fontWeight: FontWeight.w800, fontSize: 19),
           titleMedium: mainTextStyle200.copyWith(
               fontWeight: FontWeight.w600, fontSize: 16),
           titleSmall: mainTextStyle100.copyWith(
