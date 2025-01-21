@@ -1,0 +1,170 @@
+{
+	"info": {
+		"_postman_id": "c51c9b8e-9cfc-42f9-be81-a3d9103f94b4",
+		"name": "Book_Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12304510"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "#1-Register",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"anushe saadati\",\r\n    \"username\": \"anushe_ss\",\r\n    \"password\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{node_server}}register/",
+							"host": [
+								"{{node_server}}register"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "#2-Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"anushe_ss\",\r\n    \"password\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{node_server}}login/",
+							"host": [
+								"{{node_server}}login"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "#1-Profile",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{node_server}}profile/:user_id/",
+							"host": [
+								"{{node_server}}profile"
+							],
+							"path": [
+								":user_id",
+								""
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "678e807246086c307d382d7a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "#2-Edit Profile",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"anushe saadati\",\r\n    \"password\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{node_server}}profile/:user_id/",
+							"host": [
+								"{{node_server}}profile"
+							],
+							"path": [
+								":user_id",
+								""
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "678e807246086c307d382d7a"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "node_server",
+			"value": "http://127.0.0.1:3000/",
+			"type": "string"
+		}
+	]
+}
