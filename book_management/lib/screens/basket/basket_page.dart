@@ -1,4 +1,5 @@
 import 'package:book_management/models/basket_model.dart';
+import 'package:book_management/models/order_model.dart';
 import 'package:book_management/widget/bottom_navigation.dart';
 import 'package:book_management/widget/buttons.dart';
 import 'package:flutter/material.dart';
@@ -30,33 +31,33 @@ class _BasketPageState extends State<BasketPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar:
-          CustomBottomNavigation(activeType: BottomNvigationType.basket),
-      appBar: PreferredSize(
-          preferredSize: Size.fromHeight(60),
-          child: Container(
-            decoration: BoxDecoration(
-                color: AppColors.textColor25,
-                border: Border(
-                    bottom:
-                        BorderSide(color: AppColors.textColor100, width: 2))),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 28,
-                ),
-                Text(
-                  "سبد خرید",
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-              ],
-            ),
-          )),
-      body: Directionality(
-        textDirection: TextDirection.rtl,
-        child: Stack(
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        bottomNavigationBar:
+            CustomBottomNavigation(activeType: BottomNvigationType.basket),
+        appBar: PreferredSize(
+            preferredSize: Size.fromHeight(60),
+            child: Container(
+              decoration: BoxDecoration(
+                  color: AppColors.textColor25,
+                  border: Border(
+                      bottom:
+                          BorderSide(color: AppColors.textColor100, width: 2))),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 28,
+                  ),
+                  Text(
+                    "سبد خرید",
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ],
+              ),
+            )),
+        body: Stack(
           children: [
             Positioned.fill(
               child: BasketModel.instance.booksInBasket.isEmpty
@@ -97,12 +98,16 @@ class _BasketPageState extends State<BasketPage> {
                       setState(() {
                         loading = false;
                       });
+                      OrderModel order = OrderModel(
+                          id: "3456346",
+                          timeStamp: DateTime.now().millisecondsSinceEpoch,
+                          books: BasketModel.instance.booksInBasket);
+                      OrderModel.fakeData.add(order);
                       BasketModel.instance.emptyBasket();
                       Navigator.of(context).pop();
                       Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => OrdersPage(),
                       ));
-                      
                     },
                   )),
           ],

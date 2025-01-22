@@ -55,13 +55,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: CustomBottomNavigation(
-        activeType: BottomNvigationType.home,
-      ),
-      body: SafeArea(
-        child: Directionality(
-          textDirection: TextDirection.rtl,
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        bottomNavigationBar: CustomBottomNavigation(
+          activeType: BottomNvigationType.home,
+        ),
+        body: SafeArea(
           child: Column(
             children: [
               Container(
