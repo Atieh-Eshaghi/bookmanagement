@@ -6,6 +6,7 @@ class BookModel extends ValueNotifier<bool> {
   final int price;
   final String genre;
   final String imagePath;
+  final bool localImage;
   final String author;
   final String userId;
   final int pageCount;
@@ -18,6 +19,7 @@ class BookModel extends ValueNotifier<bool> {
       required this.price,
       required this.id,
       required this.imagePath,
+      this.localImage = false,
       required this.genre,
       required this.author,
       required this.isSoled,

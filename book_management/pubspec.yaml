@@ -39,6 +39,7 @@ dependencies:
   flutter_svg: ^2.0.17
   intl: ^0.20.1
   shamsi_date: ^1.0.4
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:
