@@ -19,7 +19,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"anushe saadati\",\r\n    \"username\": \"anushe_ss\",\r\n    \"password\": \"123456789\"\r\n}",
+							"raw": "{\r\n    \"name\": \"pooria saadati\",\r\n    \"username\": \"pooria_ss\",\r\n    \"password\": \"123456789\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -48,7 +48,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"anushe_ss\",\r\n    \"password\": \"123456789\"\r\n}",
+							"raw": "{\r\n    \"username\": \"pooria_ss\",\r\n    \"password\": \"123456789\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -224,7 +224,7 @@
 							"variable": [
 								{
 									"key": "user_id",
-									"value": "678e807246086c307d382d7a"
+									"value": "6790c58b124c756324d4f6ff"
 								}
 							]
 						}
@@ -383,16 +383,80 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"books_id\":[\r\n        \"678fe90f38ffdf58c0a0d045\",\r\n        \"678fe93a8cb4da92d04890a4\"\r\n    ],\r\n    \"userId\": \"678e807246086c307d382d7a\"\r\n}"
+							"raw": "{\r\n    \"booksId\":[\r\n        \"678feac80636f7120ca49bcd\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
-							"raw": "{{node_server}}books/buy/",
+							"raw": "{{node_server}}books/buy/:user_id",
 							"host": [
 								"{{node_server}}books"
 							],
 							"path": [
 								"buy",
+								":user_id"
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "6790c58b124c756324d4f6ff"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "#9-Order List",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"6790c58b124c756324d4f6ff\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{node_server}}orders/",
+							"host": [
+								"{{node_server}}orders"
+							],
+							"path": [
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "#10-Single Order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{node_server}}orders/:order_id/",
+							"host": [
+								"{{node_server}}orders"
+							],
+							"path": [
+								":order_id",
+								""
+							],
+							"variable": [
+								{
+									"key": "order_id",
+									"value": "6790c5c6124c756324d4f700"
+								}
 							]
 						}
 					},
