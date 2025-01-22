@@ -1,0 +1,497 @@
+{
+	"info": {
+		"_postman_id": "c51c9b8e-9cfc-42f9-be81-a3d9103f94b4",
+		"name": "Book_Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12304510"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "#1-Register",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"pooria saadati\",\r\n    \"username\": \"pooria_ss\",\r\n    \"password\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{node_server}}register/",
+							"host": [
+								"{{node_server}}register"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "#2-Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"pooria_ss\",\r\n    \"password\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{node_server}}login/",
+							"host": [
+								"{{node_server}}login"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "#1-Profile",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{node_server}}profile/:user_id/",
+							"host": [
+								"{{node_server}}profile"
+							],
+							"path": [
+								":user_id",
+								""
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "678e807246086c307d382d7a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "#2-Edit Profile",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"anushe saadati\",\r\n    \"password\": \"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{node_server}}profile/:user_id/",
+							"host": [
+								"{{node_server}}profile"
+							],
+							"path": [
+								":user_id",
+								""
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "678e807246086c307d382d7a"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Book",
+			"item": [
+				{
+					"name": "#1-Book List",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{node_server}}books/",
+							"host": [
+								"{{node_server}}books"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "#2-Single Book",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{node_server}}books/:book_id/",
+							"host": [
+								"{{node_server}}books"
+							],
+							"path": [
+								":book_id",
+								""
+							],
+							"variable": [
+								{
+									"key": "book_id",
+									"value": "678feac80636f7120ca49bcd"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "#3-My Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{node_server}}books/my-books/:user_id/",
+							"host": [
+								"{{node_server}}books"
+							],
+							"path": [
+								"my-books",
+								":user_id",
+								""
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "678e807246086c307d382d7a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "#4-Bought Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{node_server}}books/bought-books/:user_id/",
+							"host": [
+								"{{node_server}}books"
+							],
+							"path": [
+								"bought-books",
+								":user_id",
+								""
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "6790c58b124c756324d4f6ff"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "#5-Add Book",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "کتاب 1",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "100000",
+									"type": "text"
+								},
+								{
+									"key": "genre",
+									"value": "هیجانی",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Saadati/Desktop/1_MhRAzK4.jpg"
+								},
+								{
+									"key": "author",
+									"value": "نویسنده",
+									"type": "text"
+								},
+								{
+									"key": "pageCount",
+									"value": "120",
+									"type": "text"
+								},
+								{
+									"key": "userId",
+									"value": "678e807246086c307d382d7a",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{node_server}}books/",
+							"host": [
+								"{{node_server}}books"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "#6-Edit Book",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "زندگی، جنگ و دیگر هیچ",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "650000",
+									"type": "text"
+								},
+								{
+									"key": "genre",
+									"value": "زندگی نامه",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/Saadati/Desktop/1_MhRAzK4.jpg"
+								},
+								{
+									"key": "author",
+									"value": "اوریانا فالاچی",
+									"type": "text"
+								},
+								{
+									"key": "pageCount",
+									"value": "500",
+									"type": "text"
+								},
+								{
+									"key": "userId",
+									"value": "678e807246086c307d382d7a",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{node_server}}books/:book_id/",
+							"host": [
+								"{{node_server}}books"
+							],
+							"path": [
+								":book_id",
+								""
+							],
+							"variable": [
+								{
+									"key": "book_id",
+									"value": "678fe90f38ffdf58c0a0d045"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "#7-Delete Book",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{node_server}}books/:book_id/",
+							"host": [
+								"{{node_server}}books"
+							],
+							"path": [
+								":book_id",
+								""
+							],
+							"variable": [
+								{
+									"key": "book_id",
+									"value": "678fe93a8cb4da92d04890a4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "#8-Buy Book",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"booksId\":[\r\n        \"678feac80636f7120ca49bcd\"\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{node_server}}books/buy/:user_id",
+							"host": [
+								"{{node_server}}books"
+							],
+							"path": [
+								"buy",
+								":user_id"
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "6790c58b124c756324d4f6ff"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "#9-Order List",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"6790c58b124c756324d4f6ff\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{node_server}}orders/",
+							"host": [
+								"{{node_server}}orders"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "#10-Single Order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{node_server}}orders/:order_id/",
+							"host": [
+								"{{node_server}}orders"
+							],
+							"path": [
+								":order_id",
+								""
+							],
+							"variable": [
+								{
+									"key": "order_id",
+									"value": "6790c5c6124c756324d4f700"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "node_server",
+			"value": "http://127.0.0.1:3000/",
+			"type": "string"
+		}
+	]
+}
