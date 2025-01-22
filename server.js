@@ -84,7 +84,6 @@ app.get('/profile/:userId/', async (req, res) => {
     try {
         const db = await dbPromise
         const { userId } = req.params
-        console.log(userId)
         const user = await db.collection('users').findOne({ _id: new ObjectId(userId) })
         if (!user) {
             return res.status(404).json({ error: 'User not found.' })
@@ -123,6 +122,13 @@ app.get('/books/', async (req, res) => {
     try {
         const db = await dbPromise
         const books = await db.collection('books').find({ buyer: null }).toArray()
+        if (books.length === 0) {
+            return res.status(404).json({ error: 'Books not found.' })
+        }
+        for (let book of books) {
+            const owner = await db.collection('users').findOne({ _id: book.owner })
+            book.owner = owner
+        }
         res.status(200).json(books)
     } catch (err) {
         res.status(500).json({ error: err.message })
@@ -138,6 +144,8 @@ app.get('/books/:bookId/', async (req, res) => {
         if (!book) {
             return res.status(404).json({ error: 'Book not found.' })
         }
+        book.owner = await db.collection('users').findOne({ _id: book.owner })
+        book.buyer = book.buyer ? await db.collection('users').findOne({ _id: book.buyer }) : null
         return res.json(book)
     } catch (err) {
         res.status(500).json({ error: err.message })
@@ -154,6 +162,13 @@ app.get('/books/my-books/:userId/', async (req, res) => {
             return res.status(404).json({ error: 'User not found.' })
         }
         const books = await db.collection('books').find({ owner: user._id }).toArray()
+        if (books.length === 0) {
+            return res.status(404).json({ error: 'Books not found.' })
+        }
+        for (let book of books) {
+            book.owner = user
+            book.buyer = book.buyer ? await db.collection('users').findOne({ _id: book.buyer }) : null
+        }
         res.status(200).json(books)
     } catch (err) {
         res.status(500).json({ error: err.message })
@@ -170,6 +185,13 @@ app.get('/books/bought-books/:userId/', async (req, res) => {
             return res.status(404).json({ error: 'User not found.' })
         }
         const books = await db.collection('books').find({ buyer: user._id }).toArray()
+        if (books.length === 0) {
+            return res.status(404).json({ error: 'Books not found.' })
+        }
+        for (let book of books) {
+            book.owner = await db.collection('users').findOne({ _id: book.owner })
+            book.buyer = user
+        }
         res.status(200).json(books)
     } catch (err) {
         res.status(500).json({ error: err.message })
@@ -255,14 +277,70 @@ app.delete('/books/:bookId/', async (req, res) => {
 })
 
 // خرید کتاب
-app.put('/books/buy/', async (req, res) => {
+app.put('/books/buy/:userId/', async (req, res) => {
     try {
         const db = await dbPromise
-        const { userId, books_id } = req.body
+        const { userId } = req.params
+        const { booksId } = req.body
+        if (!booksId || booksId.length === 0) {
+            return res.status(400).json({ error: 'Please fill all fields.' })
+        }
         const user = await db.collection('users').findOne({ _id: new ObjectId(userId) })
         if (!user) {
             return res.status(404).json({ error: 'User not found.' })
         }
+        const books = await db.collection('books').find({ _id: { $in: booksId.map(id => new ObjectId(id)) } }).toArray()
+        if (books.length === 0) {
+            return res.status(404).json({ error: 'Books not found.' })
+        }
+        if (books.some(book => book.owner.toString() === userId || book.buyer)) {
+            return res.status(400).json({ error: 'You can not buy your own books or books that have been sold.' })
+        }
+        const result = await db.collection('books').updateMany({ _id: { $in: booksId.map(id => new ObjectId(id)) } }, { $set: { buyer: user._id } })
+        if (result.modifiedCount === 0) {
+            return res.status(500).json({ error: 'Failed to buy books.' })
+        }
+        const order = await db.collection('orders').insertOne({ buyer: user._id, books: books.map(book => book._id), createdAt: Date.now() })
+        if (order.insertedCount === 0) {
+            return res.status(500).json({ error: 'Failed to create order.' })
+        }
+        return res.json({ orderId: order.insertedId })
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+})
+
+// دریافت سفارشات
+app.get('/orders/', async (req, res) => {
+    try {
+        const db = await dbPromise
+        const { userId } = req.body
+        const user = await db.collection('users').findOne({ _id: new ObjectId(userId) })
+        if (!user) {
+            return res.status(404).json({ error: 'User not found.' })
+        }
+        const orders = await db.collection('orders').find({ buyer: user._id }).toArray()
+
+        for (let order of orders) {
+            order.books = await db.collection('books').find({ _id: { $in: order.books } }).toArray()
+        }
+        res.status(200).json(orders)
+    } catch (err) {
+        res.status(500).json({ error: err.message })
+    }
+})
+
+// دریافت جزئیات سفارش
+app.get('/orders/:orderId/', async (req, res) => {
+    try {
+        const db = await dbPromise
+        const { orderId } = req.params
+        const order = await db.collection('orders').findOne({ _id: new ObjectId(orderId) })
+        if (!order) {
+            return res.status(404).json({ error: 'Order not found.' })
+        }
+        order.books = await db.collection('books').find({ _id: { $in: order.books } }).toArray()
+        return res.json(order)
     } catch (err) {
         res.status(500).json({ error: err.message })
     }
