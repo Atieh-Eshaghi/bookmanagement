@@ -11,7 +11,7 @@ class BookModel extends ValueNotifier<bool> {
   final String userId;
   final int pageCount;
   final String id;
-  final bool isSoled;
+  bool isSoled;
   bool isInBasket = false;
 
   BookModel(super.isInBasket,

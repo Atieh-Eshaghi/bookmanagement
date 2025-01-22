@@ -10,7 +10,12 @@ import 'buttons.dart';
 class BookItem extends StatefulWidget {
   final BookModel book;
   final bool showBuyButton;
-  const BookItem({super.key, required this.book , this.showBuyButton = true});
+  final Function? onDelete;
+  const BookItem(
+      {super.key,
+      required this.book,
+      this.showBuyButton = true,
+      this.onDelete});
 
   @override
   State<BookItem> createState() => _BookItemState();
@@ -38,8 +43,8 @@ class _BookItemState extends State<BookItem> {
       child: Row(
         children: [
           Container(
-            width: 90,
-            height: 100,
+            width: 70,
+            height: 90,
             padding: EdgeInsets.all(1),
             decoration: BoxDecoration(
               color: AppColors.primaryColor300,
@@ -64,6 +69,7 @@ class _BookItemState extends State<BookItem> {
                   children: [
                     Text(
                       widget.book.title,
+                      overflow: TextOverflow.ellipsis,
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium!
@@ -72,22 +78,36 @@ class _BookItemState extends State<BookItem> {
                     SizedBox(
                       width: 5,
                     ),
-                    Text(
-                      "(${widget.book.genre})",
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall!
-                          .apply(color: AppColors.textColor500),
+                    Expanded(
+                      child: Text(
+                        "(${widget.book.genre})",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleSmall!
+                            .apply(color: AppColors.textColor500),
+                      ),
                     ),
-                    Spacer(),
-                    if(!widget.showBuyButton)
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => AddOrEditBookPage(book: widget.book,),
+                    if (!widget.showBuyButton && widget.book.isSoled == false)
+                      InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => AddOrEditBookPage(
+                                book: widget.book,
+                              ),
                             ));
-                      },
-                      child: Icon(Icons.edit))
+                          },
+                          child: Icon(Icons.edit)),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    if (!widget.showBuyButton && widget.book.isSoled == false)
+                      InkWell(
+                          onTap: () {
+                            if (widget.onDelete != null) {
+                              widget.onDelete!(widget.book);
+                            }
+                          },
+                          child: Icon(Icons.delete)),
                   ],
                 ),
                 SizedBox(
@@ -113,36 +133,34 @@ class _BookItemState extends State<BookItem> {
                 SizedBox(
                   height: 10,
                 ),
-                
                 Row(
                   children: [
                     Text(priceSeperator(widget.book.price)),
                     Spacer(),
                     if (!widget.showBuyButton)
-                        Text(
-                          widget.book.isSoled ? "فروخته شده" : "فروخته نشده",
-                          style: Theme.of(context).textTheme.titleMedium!.apply(
-                              color: widget.book.isSoled
-                                  ? AppColors.successColor200
-                                  : AppColors.errorColor200),
-                        ),
-                        if (widget.showBuyButton)
-                    AddToBasketButtonWidget(
-                      buttonText: widget.book.isInBasket
-                          ? "حذف از سبد"
-                          : "افزودن به سبد",
-                      isRemove: widget.book.isInBasket,
-                      onPressed: () {
-                        if (widget.book.isInBasket) {
-                          BasketModel.instance.removeBook(widget.book);
-                        } else {
-                          BasketModel.instance.addBook(widget.book);
-                        }
-                      },
-                    )
+                      Text(
+                        widget.book.isSoled ? "فروخته شده" : "فروخته نشده",
+                        style: Theme.of(context).textTheme.titleMedium!.apply(
+                            color: widget.book.isSoled
+                                ? AppColors.successColor200
+                                : AppColors.errorColor200),
+                      ),
+                    if (widget.showBuyButton)
+                      AddToBasketButtonWidget(
+                        buttonText: widget.book.isInBasket
+                            ? "حذف از سبد"
+                            : "افزودن به سبد",
+                        isRemove: widget.book.isInBasket,
+                        onPressed: () {
+                          if (widget.book.isInBasket) {
+                            BasketModel.instance.removeBook(widget.book);
+                          } else {
+                            BasketModel.instance.addBook(widget.book);
+                          }
+                        },
+                      )
                   ],
                 ),
-                
                 SizedBox(
                   height: 5,
                 ),

@@ -39,22 +39,37 @@ class _MyBooksPageState extends State<MyBooksPage> {
               ],
             ),
           )),
-          floatingActionButton: FloatingActionButton(onPressed: () {
-             Navigator.of(context).push(MaterialPageRoute(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => AddOrEditBookPage(
               book: null,
             ),
           ));
-          }, child: Center(child: Icon(Icons.add),),),
-          body: Directionality(
-            textDirection: TextDirection.rtl,
-            child: ListView.builder(
-              itemCount: myBooks.length,
-              itemBuilder: (context, index) {
-              BookModel book = myBooks[index];
-            return BookItem(book: book , showBuyButton: false,);
-            },),
-          ),
+        },
+        child: Center(
+          child: Icon(Icons.add),
+        ),
+      ),
+      body: Directionality(
+        textDirection: TextDirection.rtl,
+        child: ListView.builder(
+          itemCount: myBooks.length,
+          itemBuilder: (context, index) {
+            BookModel book = myBooks[index];
+            return BookItem(
+              book: book,
+              showBuyButton: false,
+              onDelete: (BookModel book) {
+                myBooks.remove(book);
+                setState(() {
+                  
+                });
+              },
+            );
+          },
+        ),
+      ),
       bottomNavigationBar:
           CustomBottomNavigation(activeType: BottomNvigationType.mybooks),
     );
